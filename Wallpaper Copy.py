@@ -15,15 +15,15 @@ conf = configparser.ConfigParser() # 初始化实例
 # 菜单管理
 def menu():
   menus = {
-    '0' : get_photo,
+    '0' : copy_photo,
     '1' : read_config,
     '2' : verify_default_photo_copy_path,
     '3' : verify_suffix
   }
   while True:
-    print("---------------------------------------v1.0----------------------------------------")
+    print("----------------------------------Wallpaper Copy------------------------------------")
     select_number = input("💡 菜单:\n 0.Run Wallpaper Copy \n 1.读取配置文件 \n 2.更改图片保存目录 \n 3.更改图片保存格式\n如需退出输入（exit/quit）\n")
-    print("-----------------------------------------------------------------------------------")
+    print("------------------------------------------------------------------------------------")
     method = menus.get(select_number)
     if(select_number == "exit" or select_number == "quit"):
       sys.exit(0)
@@ -124,7 +124,7 @@ def set_config(photo_suffix_value,photo_copy_path_value):
   menu()
 
 # 执行拷贝图片
-def get_photo():
+def copy_photo():
   print("🗨️ INFO: " + str(datetime.datetime.now()) + "   START")
   count = 0
   global default_photo_copy_path
@@ -133,7 +133,7 @@ def get_photo():
   copy_photo = os.path.join(default_photo_copy_path, str(date.today())) # input("请输入拷贝的目录(格式如'F:\\test')：")
   if(not os.path.exists(default_windows_focus_path)):
     print("❗","ERROR: Windows focus folder does not exist !")
-    input("🗨️ Press Enter to continue...")
+    input("💡 Press Enter to continue...")
     sys.exit(0)
   if(not os.path.exists(copy_photo)):
     print("⚠️","WARNING: The entered copy directory does not exist !")
@@ -181,7 +181,7 @@ def get_photo():
   #       os.rename(file,new_dir)
   print("🗨️","INFO: " + str(datetime.datetime.now()) + "    END")
   print("✅","执行成功，共" + str(count) + "个图片被Copy。")
-  input("🗨️","Press Enter to continue...")
+  input("💡 Press Enter to continue...")
 
 # 使用__name__ == '__main__'目的是不会被其它程序调用
 if __name__ == '__main__':

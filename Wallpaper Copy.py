@@ -43,11 +43,17 @@ def init_config():
     #   'DEFAULT_PHOTO_COPY_PATH': "",
     #   'PICTURE_FORMAT': ".jpg"
     # }
+    # print(os.getlogin())
+    # print(os.getenv('username'))
+    # print(os.environ['USERPROFILE']) # C:\Users\username C:\Users\lhr19
+    USERPROFILE = os.environ['USERPROFILE']
+    SYSTEM_WINDOWS_FOCUS_PATH = USERPROFILE + "\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets"
     conf.add_section('GLOBAL')           # 方法形式
-    conf.set('GLOBAL','DEFAULT_WINDOWS_FOCUS_PATH',r"C:\Users\lhr19\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets")
+    conf.set('GLOBAL','DEFAULT_WINDOWS_FOCUS_PATH',SYSTEM_WINDOWS_FOCUS_PATH)
     conf.set('GLOBAL','DEFAULT_PHOTO_COPY_PATH','')
     conf.set('GLOBAL','PICTURE_FORMAT','.jpg')
-    os.makedirs('./config') # 创建config目录
+    if(not os.path.exists("./config")):
+      os.makedirs('./config') # 创建config目录
     conf.write(open(default_setting_path, 'w'))   # 写入文件并保存
     print("🗨️","INFO: Successfully created !")
 
@@ -83,11 +89,12 @@ def verify_default_photo_copy_path(first = False):
       sys.exit(0)
     if(input_default_photo_copy_path == "back"):
       menu()
-    if(not os.path.exists(input_default_photo_copy_path)):
-      print("❗","ERROR: 不存在此目录，请重新输入 !")
-    if(os.path.exists(input_default_photo_copy_path)):
       break
-  set_config('',input_default_photo_copy_path)
+    if(not os.path.exists(input_default_photo_copy_path)):
+      print("🚨","ERROR: 不存在此目录，请重新输入 !")
+    if(os.path.exists(input_default_photo_copy_path)):
+      set_config('',input_default_photo_copy_path)
+      break
 
 # 校验输入的图片后缀
 def verify_suffix():
